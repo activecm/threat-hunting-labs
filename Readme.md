@@ -1,8 +1,11 @@
+This is the source repo for https://activecm.github.io/threat-hunting-labs/
 
+To update the website, just commit and push to this repository.
 
 Resources:
 - [Hugo](https://gohugo.io/) [Docs](https://gohugo.io/documentation/)
 - [Learn Theme](https://learn.netlify.com/en/)
+- [Github Workflow to Auto-Deploy](https://discourse.gohugo.io/t/deploy-hugo-project-to-github-pages-with-github-actions/20725)
 
 Add new labs in the `content` directory. Just use the existing examples there for a template.
 
