@@ -79,7 +79,6 @@ Your Zeek logs should include a file called `conn.log`. You can inspect what's i
 head conn.log
 ```
 
-__Output__
 ```bash
 #separator \x09
 #set_separator	,
@@ -99,7 +98,6 @@ This isn't very readable on it's own. There are too many columns to display on a
 head conn.log | zeek-cut -c id.orig_h id.orig_p id.resp_h id.resp_p proto service duration
 ```
 
-__Output__
 ```bash
 #separator \x09
 #set_separator	,
@@ -119,7 +117,6 @@ This is better, but so far we are only processing the first few lines of the fil
 cat conn.log | zeek-cut -c id.orig_h id.orig_p id.resp_h id.resp_p proto service duration
 ```
 
-__Output__
 ```
 ...
 10.55.100.111	57481	172.217.6.2		443	tcp	ssl	105.310590
@@ -144,7 +141,6 @@ Next, let's introduce the `sort` command.
 cat conn.log | zeek-cut id.orig_h id.orig_p id.resp_h id.resp_p proto service duration | sort -nrk 7 | head
 ```
 
-__Output__
 ```
 10.55.100.100	49778	65.52.108.225	443	tcp	-	86222.365445
 10.55.100.107	56099	111.221.29.113	443	tcp	-	86220.126151
@@ -168,7 +164,6 @@ Note that the `conn.log` shows connections for TCP, UDP, and ICMP all in the sam
 cat conn.log | zeek-cut id.orig_h id.orig_p id.resp_h id.resp_p proto service duration | grep udp | sort -nrk 7 | head
 ```
 
-__Output__
 ```
 10.55.182.100	63546	96.45.33.73		8888	udp	-	99.087045
 10.55.182.100	59685	172.217.8.196	443		udp	-	59.539003
@@ -198,7 +193,6 @@ With this, an attacker is still able to maintain persistent communication for a 
 cat conn.log | zeek-cut id.orig_h id.resp_h id.resp_p proto duration | awk 'BEGIN{ FS="\t" } { arr[$1 FS $2 FS $3 FS $4] += $5 } END{ for (key in arr) printf "%s%s%s\n", key, FS, arr[key] }' | sort -nrk 5 | head
 ```
 
-__Output__
 ```
 10.55.100.100	65.52.108.225	443	tcp	86222.4
 10.55.100.107	111.221.29.113	443	tcp	86220.1
@@ -225,11 +219,12 @@ Let's modify our command to:
 1. Disregard the destination port and protocol. If two IPs are directly communicating at all, no matter how, we want to know. This will catch cases where malware is switching between multiple ports or protocols on the same IP.
 2. Print out the number of connections that contributed to the overall duration. This will help us distinguish entries where there was a single long connection from those which had multiple connections.
 
+<!-- break -->
+
 ```bash
 cat conn.log | zeek-cut id.orig_h id.resp_h duration | awk 'BEGIN{ FS="\t" } { arr[$1 FS $2] += $3; count[$1 FS $2] += 1 } END{ for (key in arr) printf "%s%s%s%s%s\n", key, FS, count[key], FS, arr[key] }' | sort -nrk 4 | head
 ```
 
-__Output__
 ```
 10.55.100.100	65.52.108.225	1	86222.4
 10.55.100.107	111.221.29.113	1	86220.1
@@ -255,7 +250,6 @@ The dataset name in this example is "sample".
 rita show-long-connections -H --limit 10 sample
 ```
 
-__Output__
 ```
 +---------------+----------------+--------------------------+----------+
 |   SOURCE IP   | DESTINATION IP | DSTPORT:PROTOCOL:SERVICE | DURATION |

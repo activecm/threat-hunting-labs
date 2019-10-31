@@ -76,7 +76,6 @@ It's highly likely that your name server of choice already has an answer cached 
 dig do-not-respond.org A +norecurse
 ```
 
-__Output__
 ```
 ;; Got answer:
 ;; ->>HEADER<<- opcode: QUERY, status: SERVFAIL, id: 51547
@@ -96,7 +95,6 @@ Try the query again without the `+norecurse` flag.
 dig do-not-respond.org A
 ```
 
-__Output__
 ```
 ;; Got answer:
 ;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 43574
@@ -117,7 +115,6 @@ This time an answer was provided because your local resolver made the recursive 
 dig do-not-respond.org A +norecurse
 ```
 
-__Output__
 ```
 ;; Got answer:
 ;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 14157
@@ -149,7 +146,6 @@ It contains `NS` records for each of the TLDs (e.g. `com`, `net`, `org`, `shop`,
 dig @198.41.0.4 com NS +norecurse
 ```
 
-__Output__
 ```
 ;; QUESTION SECTION:
 ;com.				IN	NS
@@ -206,7 +202,6 @@ Next, we'll take the IP for one of the  returned `com` `NS` records, `a.gtld-ser
 dig @192.5.6.30 google.com NS +norecurse
 ```
 
-__Output__
 ```
 ;; QUESTION SECTION:
 ;google.com.			IN	NS
@@ -236,7 +231,6 @@ Finally, we can use the name server returned to ask for the IP address of `googl
 dig @216.239.32.10 google.com A +norecurse
 ```
 
-__Output__
 ```
 ;; QUESTION SECTION:
 ;google.com.			IN	A
@@ -264,7 +258,6 @@ Your Zeek logs should include a file called `dns.log`. You can inspect what's in
 head dns.log
 ```
 
-__Output__
 ```bash
 #separator \x09
 #set_separator	,
@@ -284,7 +277,6 @@ This isn't very readable on it's own. There are too many columns to display on a
 head dns.log | zeek-cut -c id.orig_h query qtype_name answers
 ```
 
-__Output__
 ```bash
 #separator \x09
 #set_separator	,
@@ -304,7 +296,6 @@ This is better, but so far we are only processing the first few lines of the fil
 cat dns.log | zeek-cut -c id.orig_h query qtype_name answers
 ```
 
-__Output__
 ```
 ...
 192.168.88.2	5fd2011239458783cf.dnsc.r-1x.com	TXT	TXT 18 054101123983cf4587
@@ -330,7 +321,6 @@ Just glancing at the data scrolling past you may notice some odd looking queries
 cat dns.log | zeek-cut query | sort | uniq | rev | cut -d '.' -f 1-2 | rev | sort | uniq -c | sort -nr | head
 ```
 
-__Output__
 ```
   62468 r-1x.com
     154 akamaiedge.net
@@ -368,7 +358,6 @@ After taking into consideration what we've learned in the [Background](#Backgrou
 cat dns.log | zeek-cut id.orig_h query answers | grep 'r-1x\.com'
 ```
 
-__Output__
 ```
 ...
 192.168.88.2	6dde0175375169c68f.dnsc.r-1x.com	TXT 18 302f017537c68f5169
@@ -393,7 +382,6 @@ Right away, these queries don't look like what we're used to. The queries mostly
 cat dns.log | zeek-cut id.orig_h query | grep 'r-1x\.com' | cut -f 1 | sort | uniq -c
 ```
 
-__Output__
 ```
  109227 192.168.88.2
 ```
@@ -406,7 +394,6 @@ There is more data we can glean from the Zeek logs. This command is pulling out 
 cat dns.log | zeek-cut query answers | grep 'r-1x\.com' | cut -f 2 | cut -d ' ' -f 3 | egrep '([0-9]{0,3}\.)[0-9]{0,3}' | sort | uniq
 ```
 
-__Output__
 ```
 165.227.88.15
 ```
@@ -417,7 +404,6 @@ __Output__
 cat conn.log | zeek-cut id.orig_h id.resp_h id.resp_p proto service | grep '165.227.88.15' | sort | uniq -c
 ```
 
-__Output__
 ```
       2 165.227.88.15	192.168.88.2	3	icmp	-
       2 192.168.88.2	165.227.88.15	53	tcp	-
@@ -463,7 +449,6 @@ Here is how to generate a similar output for the sample in question. This is the
 cat dns.log | zeek-cut qtype_name | sort | uniq -c | sort -nr
 ```
 
-__Output__
 ```
  199818 A
  108911 TXT
@@ -491,7 +476,6 @@ You can also pull out DNS queries straight from a pcap using tshark. The command
 tshark -r sample.pcap -T fields -e dns.qry.name udp.dstport==53 | sort | uniq | rev | cut -d '.' -f 1-2 | rev | sort | uniq -c | sort -nr | head -10
 ```
 
-__Output__
 ```
   62468 r-1x.com
     154 akamaiedge.net
@@ -534,7 +518,6 @@ The dataset name in this example is "sample".
 rita show-exploded-dns -H --limit 10 sample
 ```
 
-__Output__
 ```
 +-------------------+-------------------+-----------------+
 |      DOMAIN       | UNIQUE SUBDOMAINS | TIMES LOOKED UP |

@@ -23,7 +23,6 @@ More advanced techniques look at how long connections are held open or how regul
 cat conn.log | zeek-cut id.orig_h id.resp_h id.resp_p proto | awk 'BEGIN{ FS="\t" } { arr[$1 FS $2 FS $3 FS $4] += 1 } END{ for (key in arr) printf "%s%s%s\n", key, FS, arr[key] }' | sort -nrk 5 | head
 ```
 
-__Output__
 ```
 192.168.88.2	165.227.88.15	53	udp	108856
 10.55.200.10	172.16.200.11	53	udp	64285
@@ -61,7 +60,6 @@ The following command will display the total number of bytes sent from the IP ad
 cat conn.log | zeek-cut id.orig_h id.resp_h orig_bytes | awk 'BEGIN{ FS="\t" } { arr[$1 FS $2] += $3 } END{ for (key in arr) printf "%s%s%s\n", key, FS, arr[key] }' | sort -nrk 3 | head
 ```
 
-__Output__
 ```
 192.168.88.2	165.227.88.15		6723739
 10.55.100.111	23.38.115.36		981527
@@ -88,7 +86,6 @@ You can also modify the command to get the total amount of data sent in both dir
 cat conn.log | zeek-cut id.orig_h id.resp_h orig_bytes resp_bytes | awk 'BEGIN{ FS="\t" } { arr[$1 FS $2] += $3+$4 } END{ for (key in arr) printf "%s%s%s\n", key, FS, arr[key] }' | sort -nrk 3 | head
 ```
 
-__Output__
 ```
 10.55.100.111	162.252.74.5	2027554933
 10.55.100.103	13.107.4.50		91904287
@@ -112,7 +109,6 @@ This command uses Zeek's `http.log` file to find all UA strings, and count how m
 cat http.log | zeek-cut user_agent | sort | uniq -c | sort -n | head
 ```
 
-__Output__
 ```
       1 client connection
       1 Windows-Update-Agent/7.9.9600.18756 Client-Protocol/1.21
@@ -132,7 +128,6 @@ Next, we can investigate the unique UA strings to find out who was making the re
 cat http.log | zeek-cut id.orig_h id.resp_h host uri user_agent | grep 'client connection'
 ```
 
-__Output__
 ```
 10.55.200.10	191.239.52.100	tele.trafficmanager.net	/{AA35F099-DF2E-4104-8F15-FCB887FB32F3}	client connection
 ```
@@ -143,7 +138,6 @@ This appears to be a tracking server of some kind. Some quick reconnaissance on 
 cat http.log | zeek-cut id.orig_h id.resp_h host uri user_agent | grep 'Windows-Update-Agent/7.9.9600.18756 Client-Protocol/1.21'
 ```
 
-__Output__
 ```
 10.55.200.10	52.183.118.171	statsfe2.update.microsoft.com	/ReportingWebService/ReportingWebService.asmx	Windows-Update-Agent/7.9.9600.18756 Client-Protocol/1.21
 ```

@@ -11,7 +11,7 @@ theme = "hugo-theme-learn"
   # See the config.toml file from this documentation site to have an example.
   editURL = ""
   # Author of the site, will be used in meta information
-  author = ""
+  author = "Active Countermeasures"
   # Description of the site, will be used in meta information
   description = ""
   # Shows a checkmark for visited pages on the menu
@@ -22,7 +22,7 @@ theme = "hugo-theme-learn"
   # Set this to true to disable this behavior (some proxies don't handle well this optimization)
   disableAssetsBusting = false
   # Set this to true to disable copy-to-clipboard button for inline code.
-  disableInlineCopyToClipBoard = false
+  disableInlineCopyToClipBoard = true
   # A title for shortcuts in menu is set by default. Set this to true to disable it.
   disableShortcutsTitle = false
   # When using mulitlingual website, disable the switch language button.
@@ -35,7 +35,8 @@ theme = "hugo-theme-learn"
   ordersectionsby = "weight"
   # Change default color scheme with a variant one. Can be "red", "blue", "green".
   themeVariant = "blue"
-
+  # Change code highlight color scheme: https://github.com/highlightjs/highlight.js/tree/master/src/styles
+  highlightStyle = "rainbow"
 
 # Activate search
 [outputs]

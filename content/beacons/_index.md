@@ -52,7 +52,6 @@ Tshark is the command line equivalent of Wireshark. We can use it to process pca
 tshark -r sample.pcap -T fields -e ip.src -e ip.dst -e udp.dstport -e frame.time_delta_displayed 'ip.src==192.168.88.2 && ip.dst==165.227.88.15' | head -25
 ```
 
-__Output__
 ```
 192.168.88.2	165.227.88.15	53	0.000000000
 192.168.88.2	165.227.88.15	53	1.074819358
@@ -114,7 +113,6 @@ The dataset name in this example is "sample".
 rita show-beacons sample | head
 ```
 
-__Output__
 ```
 Score,Source IP,Destination IP,Connections,Avg Bytes,Intvl Range,Size Range,Top Intvl,Top Size,Top Intvl Count,Top Size Count,Intvl Skew,Size Skew,Intvl Dispersion,Size Dispersion
 1,192.168.88.2,165.227.88.15,108858,199,860,230,1,89,53341,108319,0,0,0,0
