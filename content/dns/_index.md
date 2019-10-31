@@ -1,12 +1,7 @@
 ---
 title: "DNS"
-date: 2019-03-26T08:47:11+01:00
-draft: true
+weight: 30
 ---
-
-# DNS
-
-[TOC]
 
 ## Goal
 
@@ -261,7 +256,7 @@ We're going to exploit the fact that C2 over DNS needs to defeat name server cac
 
 #### Subdomain Frequency Analysis
 
-Be sure to [analyze your pcap using Zeek](Basic Tool Usage.html#process-a-cap) before starting.
+Be sure to [analyze your pcap using Zeek]({{<relref "basic_usage#process-a-pcap">}}) before starting.
 
 Your Zeek logs should include a file called `dns.log`. You can inspect what's in this file using the `head` command.
 
@@ -367,6 +362,8 @@ After taking into consideration what we've learned in the [Background](#Backgrou
 
 1. Look at a few samples of queries for this domain
 
+<!-- break -->
+
 ```bash
 cat dns.log | zeek-cut id.orig_h query answers | grep 'r-1x\.com'
 ```
@@ -389,6 +386,8 @@ __Output__
 Right away, these queries don't look like what we're used to. The queries mostly have a strange looking hexadecimal string followed by `.dnsc.r-1x.com`. The queries are mostly, if not all, `TXT` type and the responses are also mostly a fixed length hexadecimal string. Take a look through more of the results and see if you can spot other types of queries and answers and determine any patterns.
 
 2. Find all the IP addresses that performed queries for this domain
+
+<!-- break -->
 
 ```bash
 cat dns.log | zeek-cut id.orig_h query | grep 'r-1x\.com' | cut -f 1 | sort | uniq -c
@@ -521,13 +520,13 @@ Under the Statistics menu select DNS. The DNS window analyzes and displays metri
 
 Sort by clicking on the Count column. Then click it again to sort in decreasing order.
 
-![1571340810509](DNS.assets/1571340810509.png)
+![1571340810509](img/1571340810509.png)
 
 The Query Type shows the number of queries by type. However, this does not remove duplicates queries.
 
 ### RITA
 
-RITA uses Zeek logs and should give us the same results as looking at the log files directly as we did above. If you haven't already, import your log files as described in the [Basic Tool Usage](Basic Tool Usage.html#import-zeek-logs) document.
+RITA uses Zeek logs and should give us the same results as looking at the log files directly as we did above. If you haven't already, import your log files as described in the [Basic Tool Usage]({{<relref "basic_usage#import-zeek-logs">}}) document.
 
 The dataset name in this example is "sample".
 

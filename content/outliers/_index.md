@@ -1,12 +1,7 @@
 ---
 title: "Outliers"
-date: 2019-03-26T08:47:11+01:00
-draft: true
+weight: 40
 ---
-
-# Outliers
-
-[TOC]
 
 ## Goal
 
@@ -18,7 +13,7 @@ Identify systems with suspiciously high or low metrics in different areas. These
 
 ## Hunt
 
-All of the scenarios here use Zeek logs. So be sure to [analyze your pcap using Zeek](Basic Tool Usage.html#process-a-cap) before starting.
+All of the scenarios here use Zeek logs. So be sure to [analyze your pcap using Zeek]({{<relref "basic_usage#process-a-pcap">}}) before starting.
 
 ### Number of Connections
 

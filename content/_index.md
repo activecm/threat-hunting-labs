@@ -1,7 +1,6 @@
 ---
 title: "Introduction"
 date: 2019-03-26T08:47:11+01:00
-draft: true
 ---
 
 
@@ -9,16 +8,16 @@ draft: true
 
 These are a series of labs that cover different types of analysis that can be done on network data when threat hunting. You can do these in any order and you can jump around individual labs to try out the tools or methods that interest you. That being said, here is our suggested order:
 
-1. [Long Connections](Long Connections.html)
-2. [Beacons](Beacons.html)
-3. [DNS](DNS.html)
-4. [Outliers](Outliers.html)
+1. [Long Connections]({{<relref "long_connections">}})
+2. [Beacons]({{<relref "beacons">}})
+3. [DNS]({{<relref "dns">}})
+4. [Outliers]({{<relref "outliers">}})
 
 Each of these labs works off of a packet capture which is located in your home directory at `~/sample.pcap`. You can copy and paste the commands easily if you work from your home directory as well.
 
  Please note that this file is over 3GB and many of the tools that work off this pcap will take a couple of minutes to finish.
 
-You can use the [Basic Tool Usage](Basic Tool Usage.html) guide as a reference for common tasks if a tool is unfamiliar to you.
+You can use the [Basic Tool Usage]({{<relref "basic_usage">}}) guide as a reference for common tasks if a tool is unfamiliar to you.
 
 
 

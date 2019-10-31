@@ -1,12 +1,7 @@
 ---
 title: "Long Connections"
-date: 2019-03-26T08:47:11+01:00
-draft: true
+weight: 10
 ---
-
-# Long Connections
-
-[TOC]
 
 ## Goal
 
@@ -25,18 +20,20 @@ To determine how long a connection stays open, we first need to define what cons
 For TCP, a typical connection starts with a 3-way handshake (SYN, SYN/ACK, ACK) and ends with a 4-way handshake (FIN, ACK, FIN, ACK)
 
 __TCP 3-Way Handshake Connection Start__
-```sequence
-Client->Server: SYN
-Server->Client: SYN/ACK
-Client->Server: ACK
+```mermaid
+  sequenceDiagram
+    Client->>Server: SYN
+    Server->>Client: SYN/ACK
+    Client->>Server: ACK
 ```
 
 __TCP 4 -Way Handshake Connection End__
-```sequence
-Client->Server: FIN
-Server->Client: ACK
-Server->Client: FIN
-Client->Server: ACK
+```mermaid
+  sequenceDiagram
+    Client->>Server: FIN
+    Server->>Client: ACK
+    Server->>Client: FIN
+    Client->>Server: ACK
 ```
 
 This means that it is easy to tell when a TCP connection starts and ends.  However, stateless protocols (namely UDP) do not have the same property.  There is no official opening to a UDP connection, and the term "connection" can be tricky to apply to UDP at all.  What firewalls and most packet analysis tools do is define a time window (typically 30-60 seconds) during which UDP packets using the same IPs and port numbers are considered part of the same "session". Each time a new packet is seen the session window TCPtimer is reset. This means that a session is considered started when the first UDP packet is seen and ended when no more UDP packets have been seen for the duration of the time window. The terms "session" and "connection" are often used interchangeably.
@@ -60,13 +57,13 @@ Under the Statistics menu select Conversations. The Conversations window summari
 
 Select the TCP tab and sort by clicking on the Duration column. Click it again to sort in decreasing order.
 
-![1571237791366](Identify Long Connections.assets/1571237791366.png)
+![1571237791366](img/1571237791366.png)
 
 From here you can see which TCP connections were held open for the longest. In the image above we have a connection from 10.55.100.100 to 65.52.108.255 on port 443 (HTTPS) that was open for 86,222 seconds, or 23.95 hours.
 
 Next, select the UDP tab and apply the same sort by clicking on the Duration column twice.
 
-![1571237816351](Identify Long Connections.assets/1571237816351.png)
+![1571237816351](img/1571237816351.png)
 
 Here we have a UDP packets from 192.168.88.2 to 216.299.4.69 on port 123 (NTP) for a duration of 86,217 seconds, or 23.95 hours.
 
@@ -74,7 +71,7 @@ However, recall the discussion above about how UDP does not have real "start" an
 
 ### Zeek
 
-Be sure to [analyze your pcap using Zeek](Basic Tool Usage.html#process-a-cap) before starting.
+Be sure to [analyze your pcap using Zeek]({{<relref "basic_usage#process-a-pcap">}}) before starting.
 
 Your Zeek logs should include a file called `conn.log`. You can inspect what's in this file using the `head` command.
 
@@ -193,7 +190,7 @@ In some cases, malware might exhibit behavior that is somewhere between a single
 
 The image below illustrates the difference by showing one single connection held open for 24 hours on top compared to 6 individual connections spread out over the 24 hours.
 
-![Image from https://www.activecountermeasures.com/identifying-long-connections-with-bro-zeek/](Long Connections.assets/cummulative vs long.png)
+![Image from https://www.activecountermeasures.com/identifying-long-connections-with-bro-zeek/](img/cummulative vs long.png)
 
 With this, an attacker is still able to maintain persistent communication for a long period of time but might not show up in the type of long connection analysis we've done so far. The following command will print the cummulative connection time from one IP address to the same destination IP and port.
 
@@ -246,11 +243,11 @@ __Output__
 10.55.100.108	65.52.108.220	1	44615.2
 ```
 
-We can see that the results didn't change even when we disregarded protocols and ports. However, now we can see that that pair from `10.55.100.111` to `172.217.8.198` had 543 separate connections where the rest of the list had 1 or 2. By dividing 56057 seconds by 543 connections we can see that each connection was open for an average of 103 seconds. If we wanted to investigate further, we could look at these individual connections' timing and duration or even perform some simple statistical analysis like we do in [Beacons](Beacons.html) to see if there is any regularity or patterns in these connections.
+We can see that the results didn't change even when we disregarded protocols and ports. However, now we can see that that pair from `10.55.100.111` to `172.217.8.198` had 543 separate connections where the rest of the list had 1 or 2. By dividing 56057 seconds by 543 connections we can see that each connection was open for an average of 103 seconds. If we wanted to investigate further, we could look at these individual connections' timing and duration or even perform some simple statistical analysis like we do in [Beacons]({{<relref "beacons">}}) to see if there is any regularity or patterns in these connections.
 
 ### RITA
 
-RITA uses Zeek logs and should give us the same results as looking at the log files directly as we did above. If you haven't already, import your log files as described in the [Basic Tool Usage](Basic Tool Usage.html#import-zeek-logs) document.
+RITA uses Zeek logs and should give us the same results as looking at the log files directly as we did above. If you haven't already, import your log files as described in the [Basic Tool Usage]({{<relref "basic_usage#import-zeek-logs">}}) document.
 
 The dataset name in this example is "sample".
 

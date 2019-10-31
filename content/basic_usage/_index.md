@@ -1,14 +1,11 @@
 ---
 title: "Basic Tool Usage"
-date: 2019-03-26T08:47:11+01:00
-draft: true
+weight: 1
 ---
 
-[TOC]
+## Zeek
 
-# Zeek
-
-## Process a Pcap
+### Process a Pcap
 
 The following command will output Zeek logs in the current directory. Because of this we recommend creating a new directory first, in this case the `logs` directory.
 
@@ -43,9 +40,9 @@ Here is a sample of the logs generated that you can find in your `logs` director
 
 You can find more information about these logs in [Zeek's documentation](https://docs.zeek.org/en/stable/script-reference/log-files.html) or in [Corelight's Cheatsheets](https://github.com/corelight/bro-cheatsheets/blob/master/Corelight-Bro-Cheatsheets-2.6.pdf).
 
-# RITA
+## RITA
 
-## Import Zeek Logs
+### Import Zeek Logs
 
 The following command assumes you have your Zeek logs in the `logs` directory and you want to name your dataset `sample`.
 
@@ -53,7 +50,7 @@ The following command assumes you have your Zeek logs in the `logs` directory an
 rita import logs sample
 ```
 
-## Viewing Results
+### Viewing Results
 
 In general, the syntax for viewing results is:
 
@@ -79,7 +76,7 @@ You can also run `rita COMMAND --help` to view detailed usage for each command. 
 
 
 
-### HTML Report
+#### HTML Report
 
 Run the following command on your dataset. In this case the dataset name is "sample".
 
@@ -89,13 +86,13 @@ rita html-report sample
 
 This will generate HTML files with the results from the dataset. It should open the report in a web browser for you. But if you need to you can open this file manually: `sample/index.html`
 
-![1571427712714](Basic Tool Usage.assets/1571427712714.png)
+![1571427712714](img/1571427712714.png)
 
 Click on the dataset name "sample" and you should see this screen.
 
-![1571427779399](Basic Tool Usage.assets/1571427779399.png)
+![1571427779399](img/1571427779399.png)
 
 Navigate between the different reports using the labels on the top of the screen. For instance, clicking Beacons will display a table with the beacon results in it.
 
-![1571427828455](Basic Tool Usage.assets/1571427828455.png)
+![1571427828455](img/1571427828455.png)
 

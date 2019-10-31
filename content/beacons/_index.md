@@ -1,12 +1,7 @@
 ---
 title: "Beacons"
-date: 2019-03-26T08:47:11+01:00
-draft: true
+weight: 20
 ---
-
-# Beacons
-
-[TOC]
 
 ## Goal
 
@@ -31,21 +26,21 @@ Open your pcap in Wireshark. This loads every individual packet in the main wind
 
 Apply the filter `ip.src==192.168.88.2 && ip.dst==165.227.88.15`. This exercise is meant to illustrate the process that is automated with tools such as [RITA](#RITA). Your window should now look something like this:
 
-![1571421694581](Beacons.assets/1571421694581.png)
+![1571421694581](img/1571421694581.png)
 
 If you look at the Time column, you can already see a pattern emerge. The seconds increase by 1 pretty consistently.
 
 Open the Column Preferences by right-clicking on one of the columns (e.g. Destination) and selecting Column Preferences from the menu.
 
- ![screenshot1](Beacons.assets/screenshot1.png)
+ ![screenshot1](img/screenshot1.png)
 
 Inside the preferences, click the + button to add a new item and make it match the entry shown below with "Time Delta" for the title and "frame.time_delta_displayed" in the Fields column. You need to double-click inside the box to edit the values. Then uncheck the Info/Information line to temporarily hide that item and click OK.
 
-![1571422192944](Beacons.assets/1571422192944.png)
+![1571422192944](img/1571422192944.png)
 
 You should then see a new column that contains the difference in times between each packet and the previous one.
 
-![1571422468976](Beacons.assets/1571422468976.png)
+![1571422468976](img/1571422468976.png)
 
 Our previous hunch that most packets are 1 second apart is confirmed. This shows that the IP `192.168.88.2` was communicating with `165.227.88.15` consistently on a 1 second interval.
 
@@ -101,17 +96,17 @@ tshark -r sample.pcap -T fields -E separator=, -e ip.len -e frame.time_delta_dis
 
 And then open the file in a spreadsheet program and calculate some basic statistics, such as the min, max, mean, and standard deviation of the data.
 
-![1571432092846](Beacons.assets/1571432092846.png)
+![1571432092846](img/1571432092846.png)
 
 Hint: Here are the formulas used in the above example. But you can have them automatically generated in LibreOffice Calc by using Data -> Statistics -> Descriptive Statistics menu item.
 
-![1571432165948](Beacons.assets/1571432165948.png)
+![1571432165948](img/1571432165948.png)
 
 ### RITA
 
 RITA calculates various statistical measures for both the time interval between connections and the size of each connection.
 
-If you haven't already, generate Zeek logs from the pcap, and import the Zeek files as described in the [Basic Tool Usage](Basic Tool Usage.html) document.
+If you haven't already, generate Zeek logs from the pcap, and import the Zeek files as described in the [Basic Tool Usage]({{<relref "basic_usage">}}) document.
 
 The dataset name in this example is "sample".
 
@@ -139,9 +134,9 @@ In this case, the ascii table output is not as useful as it is too wide. However
 rita show-beacons sample > sample.csv
 ```
 
-Or you can export the results to an [HTML report](Basic Tool Usage.html#html-report) and view the data in a web browser.
+Or you can export the results to an [HTML report]({{<relref "basic_usage#html-report">}}) and view the data in a web browser.
 
-![1571427848768](Beacons.assets/1571427848768.png)
+![1571427848768](img/1571427848768.png)
 
 The different columns are as follows:
 
