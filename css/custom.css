@@ -1,0 +1,12 @@
+pre {
+    background: #FFFFFF;
+}
+
+code {
+	background: #e3e3e3;
+}
+
+#sidebar .searchbox {
+    margin-left: 1rem;
+    margin-right: 1rem;
+ }
