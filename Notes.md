@@ -110,3 +110,4 @@ echo "Please bookmark, and set the homepage"
 		- least common ja3 hash
 		- IP with the highest score, given defined rating system
 
+* Host the pcap and provide a download link
