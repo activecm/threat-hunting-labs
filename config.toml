@@ -1,4 +1,4 @@
-baseURL = "/"
+baseURL = "/threat-hunting-labs/"
 languageCode = "en-us"
 defaultContentLanguage = "en"
 
