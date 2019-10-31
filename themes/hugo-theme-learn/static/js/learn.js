@@ -175,11 +175,12 @@ jQuery(document).ready(function() {
 
     // clipboard
     var clipInit = false;
-    $('code').each(function() {
+    // only copy button add to full ``` blocks and not inline code blocks.
+    $('pre code').each(function() {
         var code = $(this),
             text = code.text();
 
-        if (text.length > 5) {
+        // if (text.length > 5) {
             if (!clipInit) {
                 var text, clip = new ClipboardJS('.copy-to-clipboard', {
                     text: function(trigger) {
@@ -210,7 +211,7 @@ jQuery(document).ready(function() {
             code.next('.copy-to-clipboard').on('mouseleave', function() {
                 $(this).attr('aria-label', null).removeClass('tooltipped tooltipped-s tooltipped-w');
             });
-        }
+        // }
     });
 
     // allow keyboard control for prev/next links
@@ -229,7 +230,7 @@ jQuery(document).ready(function() {
              e.stopPropagation();
          }
      });
-    
+
     jQuery(document).keydown(function(e) {
       // prev links - left arrow key
       if(e.which == '37') {
@@ -264,7 +265,7 @@ jQuery(document).ready(function() {
         });
     }
 
-    /** 
+    /**
     * Fix anchor scrolling that hides behind top nav bar
     * Courtesy of https://stackoverflow.com/a/13067009/28106
     *
@@ -346,7 +347,7 @@ jQuery(document).ready(function() {
 
         $(document).ready($.proxy(anchorScrolls, 'init'));
     })(window.document, window.history, window.location);
-    
+
 });
 
 jQuery(window).on('load', function() {
