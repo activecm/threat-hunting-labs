@@ -99,7 +99,6 @@ echo "Please bookmark, and set the homepage"
 * Add callouts when tools will spit out warnings/errors that can be ignored
 * Pipe to `less -S` when screen overflows
 * Add more guidepost statements like "The purpose of this exercise is to ..."
-* Add a button to all code blocks that lets you click to copy the contents
 * Explain in the DNS lab how DNS malware is set up and why it works
 * Make a rita section in the User Agent lab
 * Come up with challenges that use the skills taught in the labs but which don't have walkthrouhgs

@@ -15,7 +15,7 @@ theme = "hugo-theme-learn"
   # Description of the site, will be used in meta information
   description = ""
   # Shows a checkmark for visited pages on the menu
-  showVisitedLinks = false
+  showVisitedLinks = true
   # Disable search function. It will hide search bar
   disableSearch = false
   # Javascript and CSS cache are automatically busted when new version of site is generated.
@@ -34,7 +34,7 @@ theme = "hugo-theme-learn"
   # Order sections in menu by "weight" or "title". Default to "weight"
   ordersectionsby = "weight"
   # Change default color scheme with a variant one. Can be "red", "blue", "green".
-  themeVariant = "blue"
+  themeVariant = "mine"
   # Change code highlight color scheme: https://github.com/highlightjs/highlight.js/tree/master/src/styles
   highlightStyle = "rainbow"
 

@@ -1,8 +1,12 @@
 pre {
-    /*padding: 1rem;*/
-    /*margin: 2rem 0;*/
     background: #FFFFFF;
-    /*border: 0;*/
-    /*border-radius: 2px;*/
-    /*line-height: 1.15;*/
 }
+
+code {
+	background: #e3e3e3;
+}
+
+#sidebar .searchbox {
+    margin-left: 1rem;
+    margin-right: 1rem;
+ }
