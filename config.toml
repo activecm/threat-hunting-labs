@@ -1,9 +1,14 @@
-baseURL = "/threat-hunting-labs/"
+baseURL = ""
 languageCode = "en-us"
 defaultContentLanguage = "en"
 
 title = "Threat Hunting Labs"
 theme = "hugo-theme-learn"
+
+# Enabled to work with filesystem serving. Adds file extensions to urls
+uglyURLs = true
+# Enabled to work with filesystem serving. Makes all relative URLs relative to the fs root.
+relativeURLs = true
 
 [params]
   # Prefix URL to edit current page. Will display an "Edit this page" button on top right hand corner of every page.
