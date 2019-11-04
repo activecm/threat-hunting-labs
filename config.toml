@@ -41,3 +41,22 @@ theme = "hugo-theme-learn"
 # Activate search
 [outputs]
 home = [ "HTML", "RSS", "JSON"]
+
+[[menu.shortcuts]]
+name = "<i class='fab fa-youtube'></i> Free Training Videos"
+identifier = "video"
+url = "https://www.activecountermeasures.com/thunt/"
+weight = 10
+
+[[menu.shortcuts]]
+# "<img src="{{"images/favicon.png" | relURL}}" />
+name =  "<i class='fab fa-wordpress'></i> Active Countermeasures Blog"
+identifier = "blog"
+url = "https://www.activecountermeasures.com/blog/"
+weight = 20
+
+[[menu.shortcuts]]
+name = "<i class='fab fa-github'></i> Github Repo"
+identifier = "github"
+url = "https://github.com/activecm/threat-hunting-labs"
+weight = 30
