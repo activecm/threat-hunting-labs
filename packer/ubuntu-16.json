@@ -1,0 +1,74 @@
+{
+	"builders": [{
+		"type": "virtualbox-iso",
+		"guest_os_type": "Ubuntu_64",
+		"boot_command": [
+			"<enter><wait><f6><esc><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+			"/install/vmlinuz noapic ",
+			"file=/floppy/preseed.cfg ",
+			"debian-installer=en_US.UTF-8 auto locale=en_US.UTF-8 kbd-chooser/method=us ",
+			"hostname=ACMLabs ",
+			"grub-installer/bootdev=/dev/sda<wait> ",
+			"fb=false debconf/frontend=noninteractive ",
+			"keyboard-configuration/modelcode=SKIP keyboard-configuration/layout=USA ",
+			"keyboard-configuration/variant=USA console-setup/ask_detect=false ",
+			"passwd/user-fullname=ACM User ",
+			"passwd/user-password=ubuntu ",
+			"passwd/user-password-again=ubuntu ",
+			"passwd/username=ubuntu ",
+			"initrd=/install/initrd.gz -- <enter>"
+	    	],
+		"floppy_files": [
+			"http/preseed.cfg"
+		],
+		"iso_url": "http://releases.ubuntu.com/16.04/ubuntu-16.04.6-server-amd64.iso",
+		"iso_checksum": "16afb1375372c57471ea5e29803a89a5a6bd1f6aabea2e5e34ac1ab7eb9786ac",
+		"iso_checksum_type": "sha256",
+		"output_directory": "output-ubuntu-16",
+		"vm_name": "activecm-labs-ubuntu-16.04-amd64",
+		"hard_drive_interface": "sata",
+		"disk_size": 20000,
+		"headless": "false",
+		"http_directory": "http",
+		"boot_wait": "5s",
+		"ssh_timeout": "60m",
+		"ssh_username": "ubuntu",
+		"ssh_password": "ubuntu",
+		"shutdown_command": "echo 'ubuntu' | sudo -S systemctl poweroff",
+		"vboxmanage": [
+			["modifyvm", "{{.Name}}", "--memory", 4096],
+			["modifyvm", "{{.Name}}", "--cpus", 2],
+			["modifyvm", "{{.Name}}", "--graphicscontroller", "vboxsvga"],
+			["modifyvm", "{{.Name}}", "--vram", 128],
+			["modifyvm", "{{.Name}}", "--accelerate3d", "on"]
+		]
+	}],
+	"provisioners": [
+		{
+			"type": "shell",
+			"inline": [
+				"wget --directory-prefix=/home/ubuntu/Downloads/ http://download.opensuse.org/repositories/network:bro/xUbuntu_16.04/Release.key",
+				"echo 'ubuntu' | sudo -S /bin/bash -c 'apt-key add - < /home/ubuntu/Downloads/Release.key'",
+				"echo 'ubuntu' | sudo -S /bin/bash -c 'echo deb http://download.opensuse.org/repositories/network:/bro/xUbuntu_16.04/ /> /etc/apt/sources.list.d/Bro.list'",
+				"echo 'ubuntu' | sudo -S apt-get update",
+				"echo 'ubuntu' | sudo -S DEBIAN_FRONTEND=noninteractive apt-get -y install xubuntu-desktop virtualbox-guest-dkms tshark wireshark bro broctl",
+				"echo 'ubuntu' | sudo -S wget --directory-prefix=/opt/bro/share/bro/site/ja3/ 'https://raw.githubusercontent.com/salesforce/ja3/master/bro/__load__.bro'",
+				"echo 'ubuntu' | sudo -S wget --directory-prefix=/opt/bro/share/bro/site/ja3/ 'https://raw.githubusercontent.com/salesforce/ja3/master/bro/intel_ja3.bro'",
+				"echo 'ubuntu' | sudo -S wget --directory-prefix=/opt/bro/share/bro/site/ja3/ 'https://raw.githubusercontent.com/salesforce/ja3/master/bro/ja3.bro'",
+				"echo 'ubuntu' | sudo -S wget --directory-prefix=/opt/bro/share/bro/site/ja3/ 'https://raw.githubusercontent.com/salesforce/ja3/master/bro/ja3s.bro'",
+				"echo 'ubuntu' | sudo -S /bin/bash -c 'echo @load ./ja3 >> /opt/bro/share/bro/site/local.bro'",
+				"echo 'ubuntu' | sudo -S /bin/bash -c 'echo redef Site::local_nets += { 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16 }\\; >> /opt/bro/share/bro/site/local.bro'",
+				"echo 'ubuntu' | sudo -S ln -s /opt/bro/bin/bro /usr/local/bin/zeek",
+				"echo 'ubuntu' | sudo -S ln -s /opt/bro/bin/bro /usr/local/bin/bro",
+				"wget --directory-prefix=/home/ubuntu/Downloads https://github.com/activecm/rita/releases/download/v3.1.1/install.sh",
+				"chmod +x /home/ubuntu/Downloads/install.sh",
+				"echo 'ubuntu' | sudo -S DEBIAN_FRONTEND=noninteractive /home/ubuntu/Downloads/install.sh --disable-bro",
+				"echo 'ubuntu' | sudo -S sed -i.orig 's|^    #InternalSubnets:$|    InternalSubnets: [ 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16 ]|' /etc/rita/config.yaml",
+				"wget --mirror --convert-links --adjust-extension --page-requisites --no-parent --directory-prefix=/home/ubuntu/Desktop/ https://activecm.github.io/threat-hunting-labs",
+				"wget --directory-prefix=/home/ubuntu/Desktop/ https://github.com/activecm/threat-hunting-labs/releases/download/v1.0/sample-1500.pcap",
+				"wget --directory-prefix=/home/ubuntu/Desktop/ https://github.com/activecm/threat-hunting-labs/releases/download/v1.0/sample-500.pcap",
+				"wget --directory-prefix=/home/ubuntu/Desktop/ https://github.com/activecm/threat-hunting-labs/releases/download/v1.0/sample-200.pcap"
+			]
+		}
+	]
+}
