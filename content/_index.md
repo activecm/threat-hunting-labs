@@ -31,7 +31,7 @@ Please note that processing large pcaps in many of these labs will take a couple
 If you enjoy these labs and are interested in learning more about network threat hunting:
 
 1. Check out our articles on the [Active Countermeasures Blog](https://www.activecountermeasures.com/blog/) (or [Subscribe](https://www.activecountermeasures.com/subscribe/) for email updates)
-2. Sign up for our free [Network Threat Hunter Training](https://www.activecountermeasures.com/thunt/) which consists of a series of recorded 1-hour videos
+2. Sign up for our free [Webcasts](https://www.activecountermeasures.com/webcasts/) which consists of a series of recorded videos
 
 Thank you for participating!
 
