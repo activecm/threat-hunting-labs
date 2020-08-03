@@ -43,9 +43,9 @@ theme = "hugo-theme-learn"
 home = [ "HTML", "RSS", "JSON"]
 
 [[menu.shortcuts]]
-name = "<i class='fab fa-youtube'></i> Free Training Videos"
+name = "<i class='fab fa-youtube'></i> Webcasts"
 identifier = "video"
-url = "https://www.activecountermeasures.com/thunt/"
+url = "https://www.activecountermeasures.com/webcasts/"
 weight = 10
 
 [[menu.shortcuts]]
